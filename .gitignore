@@ -52,4 +52,5 @@ Temporary Items
 /bin
 /target
 credentials.properties
-.settings/org.eclipse.core.resources.prefs
+/.settings
+.settings/org.eclipse.jdt.core.prefs
