@@ -13,12 +13,7 @@ public class API {
      * @throws IOException
      */
     public static String getUsername() throws IOException {
-        File file = new File("credentials.properties");
-        FileInputStream fileInput = new FileInputStream(file);
-        Properties properties = new Properties();
-        properties.load(fileInput);
-        fileInput.close();
-        return properties.getProperty("username");
+        return readProperty("credentials.properties", "username");
     }
 
     /**
@@ -27,12 +22,7 @@ public class API {
      * @throws IOException
      */
     public static String getAuthPass() throws IOException {
-        File file = new File("credentials.properties");
-        FileInputStream fileInput = new FileInputStream(file);
-        Properties properties = new Properties();
-        properties.load(fileInput);
-        fileInput.close();
-        return properties.getProperty("pass");
+        return readProperty("credentials.properties", "pass");
     }
 
     /**
@@ -41,12 +31,23 @@ public class API {
      * @throws IOException
      */
     public static String getChannel() throws IOException {
-        File file = new File("credentials.properties");
+        return readProperty("credentials.properties", "channel");
+    }
+
+    /**
+     * Read from a properties file and get property value
+     * @param fileName      filename of .properties file
+     * @param property      property key
+     * @return              property key, default null
+     * @throws IOException
+     */
+    public static String readProperty(String fileName, String property) throws IOException {
+        File file = new File(fileName);
         FileInputStream fileInput = new FileInputStream(file);
-        Properties properties = new Properties();
-        properties.load(fileInput);
+        Properties propertis = new Properties();
+        propertis.load(fileInput);
         fileInput.close();
-        return properties.getProperty("channel");
+        return propertis.getProperty(property, null);
     }
 
 }
