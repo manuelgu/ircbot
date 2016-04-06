@@ -25,7 +25,7 @@ public class IRCBot extends PircBot {
         field.set(instance, "mServant");
 
         // Set version
-        instance.setVersion("IRCBot - manuelgu");
+        instance.setVersion("Serving you 24/7");
 
         // Read username and pass from credentials file
         clientUsername = API.getUsername();
