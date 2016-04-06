@@ -41,6 +41,12 @@ public class Command {
         IRCBot.commandList.add(this);
     }
 
+    /**
+     * Get the command object from the actual command
+     * <b>MIGHT CONTAIN DUPLICATE ENTRIES</b>
+     * @param cmd       Command as string without prefix
+     * @return          Command object with all arguments
+     */
     public static Command fromCommand(String cmd) {
         for (Command a : IRCBot.commandList) {
             if (a.getCommand().equalsIgnoreCase(cmd)) {

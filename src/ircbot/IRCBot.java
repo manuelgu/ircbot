@@ -23,7 +23,7 @@ public class IRCBot extends PircBot {
         instance.identify(API.getAuthPass());
 
         // Join channel
-        instance.joinChannel("#manuelgu");
+        instance.joinChannel(CHANNEL);
     }
 
     @Override
@@ -74,6 +74,10 @@ public class IRCBot extends PircBot {
         super.onDisconnect();
     }
 
+    /**
+     * Call onCommand method to handle input
+     * @param command       Command to parse
+     */
     public void onCommand(Command command) {
         sendMessage(command.getChannel(), command.getMessage());
     }
