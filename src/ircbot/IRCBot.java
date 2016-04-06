@@ -11,7 +11,7 @@ public class IRCBot extends PircBot {
     private static IRCBot instance = new IRCBot();
     public static Set<Command> commandList = new HashSet<>();
 
-    private static final String CHANNEL = "#manuelgu";
+    private static String channel;
     private static String clientUsername;
     private static String clientPass;
 
@@ -31,9 +31,11 @@ public class IRCBot extends PircBot {
         clientUsername = API.getUsername();
         clientPass = API.getAuthPass();
 
+        channel = API.getChannel();
+
         // Register commands
-        new Command(Prefix.QUESTION_MARK, CHANNEL, "webchat", "http://webchat.esper.net/?nick=&channels=manuelgu");
-        new Command(Prefix.QUESTION_MARK, CHANNEL, "ping", Arrays.asList("Ping?", "Pong!"));
+        new Command(Prefix.QUESTION_MARK, channel, "webchat", "http://webchat.esper.net/?nick=&channels=manuelgu");
+        new Command(Prefix.QUESTION_MARK, channel, "ping", Arrays.asList("Ping?", "Pong!"));
 
         // Connect and authorize
         instance.setName(clientUsername);
@@ -41,7 +43,7 @@ public class IRCBot extends PircBot {
         instance.identify(clientPass);
 
         // Join channel
-        instance.joinChannel(CHANNEL);
+        instance.joinChannel(channel);
     }
 
     @Override

@@ -34,4 +34,19 @@ public class API {
         fileInput.close();
         return properties.getProperty("pass");
     }
+
+    /**
+     * Get the channel specified in the <i>credentials.properties</i>
+     * @return Channel name
+     * @throws IOException
+     */
+    public static String getChannel() throws IOException {
+        File file = new File("credentials.properties");
+        FileInputStream fileInput = new FileInputStream(file);
+        Properties properties = new Properties();
+        properties.load(fileInput);
+        fileInput.close();
+        return properties.getProperty("channel");
+    }
+
 }
