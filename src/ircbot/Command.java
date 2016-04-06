@@ -4,6 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import java.util.List;
 
+/**
+ * Represents a command
+ *
+ */
 public class Command {
     @Getter
     @Setter
@@ -48,7 +52,7 @@ public class Command {
      * @param cmd       Command as string without prefix
      * @return          Command object with all arguments
      */
-    public static Command fromCommand(String prefix, String cmd) {
+    public static Command getCommand(String prefix, String cmd) {
         for (Command a : IRCBot.commandList) {
             if (a.getCommand().equalsIgnoreCase(cmd) && a.getPrefix().toString().equals(prefix)) {
                 return a;

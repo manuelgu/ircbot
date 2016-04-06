@@ -50,7 +50,7 @@ public class IRCBot extends PircBot {
         if (validateCommand(message)) {
             String prefix = message.substring(0, 1);
             String command = message.substring(1);
-            onCommand(Command.fromCommand(prefix, command));
+            onCommand(Command.getCommand(prefix, command));
         }
 
         super.onMessage(channel, sender, login, hostname, message);
@@ -105,7 +105,7 @@ public class IRCBot extends PircBot {
         String prefixStr = message.substring(0, 1);
         String commandStr = message.substring(1);
 
-        Command command = Command.fromCommand(prefixStr, commandStr);
+        Command command = Command.getCommand(prefixStr, commandStr);
 
         if (command == null) {
             return false;
