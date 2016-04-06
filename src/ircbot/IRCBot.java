@@ -22,7 +22,7 @@ public class IRCBot extends PircBot {
         // Set login name via reflection
         Field field = PircBot.class.getDeclaredField("_login");
         field.setAccessible(true);
-        field.set(instance, "mServant");
+        field.set(instance, clientUsername);
 
         // Set version
         instance.setVersion("Serving you 24/7");
