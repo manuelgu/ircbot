@@ -16,6 +16,7 @@ Usage examples would be having shortcuts for important links that people recentl
   username=IRCUsername
   pass=NickServPassword
   channel=#yourchannel
+  version=VersionName
   ```
   
 3. Build the plugin with maven, `maven clean install`

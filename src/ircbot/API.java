@@ -35,6 +35,15 @@ public class API {
     }
 
     /**
+     * Get the version specified in the <i>credentials.properties</i>
+     * @return Version string
+     * @throws IOException
+     */
+    public static String getVersion() throws IOException {
+        return readProperty("credentials.properties", "version");
+    }
+
+    /**
      * Read from a properties file and get property value
      * @param fileName      filename of .properties file
      * @param property      property key

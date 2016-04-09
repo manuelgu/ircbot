@@ -25,7 +25,7 @@ public class IRCBot extends PircBot {
         field.set(instance, clientUsername);
 
         // Set version
-        instance.setVersion("Serving you 24/7");
+        instance.setVersion(API.getVersion());
 
         // Read username and pass from credentials file
         clientUsername = API.getUsername();
@@ -87,7 +87,7 @@ public class IRCBot extends PircBot {
      * @param command       Command to parse
      */
     private void onCommand(Command command) {
-        String message = "";
+        String message;
         if (!command.getMessages().isEmpty()) {
             Random random = new Random();
             message = command.getMessages().get(random.nextInt(command.getMessages().size()));
