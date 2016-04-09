@@ -27,7 +27,7 @@ public class API {
 
     /**
      * Get the channel specified in the <i>credentials.properties</i>
-     * @return Channel name
+     * @return channel name
      * @throws IOException
      */
     public static String getChannel() throws IOException {
@@ -36,7 +36,7 @@ public class API {
 
     /**
      * Get the version specified in the <i>credentials.properties</i>
-     * @return Version string
+     * @return version string
      * @throws IOException
      */
     public static String getVersion() throws IOException {
@@ -50,7 +50,7 @@ public class API {
      * @return              property key, default null
      * @throws IOException
      */
-    public static String readProperty(String fileName, String property) throws IOException {
+    private static String readProperty(String fileName, String property) throws IOException {
         File file = new File(fileName);
         FileInputStream fileInput = new FileInputStream(file);
         Properties propertis = new Properties();

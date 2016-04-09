@@ -61,8 +61,10 @@ public class IRCBot extends PircBot {
 
     @Override
     protected void onDisconnect() {
-        while (!isConnected()) {
+        int iterations = 0;
+        while (!isConnected() && iterations <= 5) {
             try {
+                iterations++;
                 reconnect();
             } catch (Exception ignored) { }
         }
@@ -85,11 +87,13 @@ public class IRCBot extends PircBot {
 
     /**
      * Call onCommand method to handle input
-     * @param command       Command to parse
+     * @param command       command to parse
      */
     private void onCommand(Command command) {
         String message;
+        // Multiple answers available?
         if (!command.getMessages().isEmpty()) {
+            // Pick random
             Random random = new Random();
             message = command.getMessages().get(random.nextInt(command.getMessages().size()));
         } else {
@@ -100,8 +104,8 @@ public class IRCBot extends PircBot {
 
     /**
      * Validates whether a message contains a valid command or not
-     * @param message       Message to make checks against
-     * @return              True if command is valid
+     * @param message       message to make checks against
+     * @return              true if command is valid
      */
     private boolean validateCommand(String message) {
         message = message.toLowerCase();
@@ -113,14 +117,15 @@ public class IRCBot extends PircBot {
         if (command == null) {
             return false;
         }
+        // Message at least prefix + one character
         if (message.length() < 2) {
             return false;
         }
+        // Prefix is valid
         if (!Arrays.asList(Prefix.values()).contains(command.getPrefix())) {
             return false;
         }
         for (Command c : commandList) {
-            System.out.println(c.getCommand());
             if (!c.getCommand().equalsIgnoreCase(command.getCommand())) {
                 continue;
             }

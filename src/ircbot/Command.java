@@ -1,8 +1,9 @@
 package ircbot;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
-import java.util.List;
 
 /**
  * Represents a command
@@ -49,8 +50,8 @@ public class Command {
 
     /**
      * Get the command object from the actual command
-     * @param cmd       Command as string without prefix
-     * @return          Command object with all arguments
+     * @param cmd       command as string without prefix
+     * @return          command object with all arguments
      */
     public static Command getCommand(String prefix, String cmd) {
         for (Command a : IRCBot.commandList) {
