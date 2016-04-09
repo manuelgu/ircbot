@@ -18,6 +18,6 @@ public enum Prefix {
         public String toString() {
             return "!";
         }
-    };
+    }
 
 }

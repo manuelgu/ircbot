@@ -1,6 +1,7 @@
 package ircbot;
 
 import org.jibble.pircbot.PircBot;
+
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -14,24 +15,22 @@ public class IRCBot extends PircBot {
     private static String channel;
     private static String clientUsername;
     private static String clientPass;
+    private static String version;
 
     public static void main(String[] args) throws Exception {
         // Enable verbose mode
         instance.setVerbose(true);
 
+        // Read username, pass and channel from credentials file
+        clientUsername = API.getUsername();
+        clientPass = API.getAuthPass();
+        channel = API.getChannel();
+        version = API.getVersion();
+
         // Set login name via reflection
         Field field = PircBot.class.getDeclaredField("_login");
         field.setAccessible(true);
         field.set(instance, clientUsername);
-
-        // Set version
-        instance.setVersion(API.getVersion());
-
-        // Read username and pass from credentials file
-        clientUsername = API.getUsername();
-        clientPass = API.getAuthPass();
-
-        channel = API.getChannel();
 
         // Register commands
         new Command(Prefix.QUESTION_MARK, channel, "webchat", "http://webchat.esper.net/?nick=&channels=manuelgu");
@@ -39,11 +38,13 @@ public class IRCBot extends PircBot {
 
         // Connect and authorize
         instance.setName(clientUsername);
+        instance.setVersion(version);
         instance.connect("irc.esper.net", 6667);
         instance.identify(clientPass);
 
         // Join channel
         instance.joinChannel(channel);
+
     }
 
     @Override
@@ -63,7 +64,7 @@ public class IRCBot extends PircBot {
         while (!isConnected()) {
             try {
                 reconnect();
-            } catch (Exception e) { }
+            } catch (Exception ignored) { }
         }
         super.onDisconnect();
     }

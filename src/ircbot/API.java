@@ -58,5 +58,4 @@ public class API {
         fileInput.close();
         return propertis.getProperty(property, null);
     }
-
 }
