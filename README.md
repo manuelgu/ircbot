@@ -19,7 +19,7 @@ Usage examples would be having shortcuts for important links that people recentl
   version=VersionName
   ```
   
-3. Build the plugin with maven, `maven clean install`
+3. Build the plugin with maven, `mvn clean install`
 4. Run the jar file
 
 ## How to contribute
