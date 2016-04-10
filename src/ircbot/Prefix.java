@@ -18,5 +18,11 @@ public enum Prefix {
         public String toString() {
             return "!";
         }
+    },
+    HASHTAG {
+        @Override
+        public String toString() {
+            return "#";
+        }
     }
 }

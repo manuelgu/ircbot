@@ -1,5 +1,5 @@
 # ircbot
-IRC Bot running on the [PircBot Framework](http://www.jibble.org/pircbot.php)
+IRC Bot running on the [PircBotX Framework](https://github.com/TheLQ/pircbotx)
 
 ## General
 

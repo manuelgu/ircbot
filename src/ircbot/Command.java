@@ -1,5 +1,6 @@
 package ircbot;
 
+import java.util.Arrays;
 import java.util.List;
 
 import lombok.Getter;
@@ -43,7 +44,7 @@ public class Command {
         this.prefix = prefix;
         this.channel = channel;
         this.command = command;
-        this.messages = null;
+        this.messages = Arrays.asList();
         this.message = message;
         IRCBot.commandList.add(this);
     }
