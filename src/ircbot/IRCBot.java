@@ -26,10 +26,11 @@ public class IRCBot {
 
     public static void main(String[] args) throws Exception {
         // Read username, pass and channel from credentials file
-        clientUsername = API.getUsername();
-        clientPass = API.getAuthPass();
-        channel = API.getChannel();
-        version = API.getVersion();
+        API api = new API();
+        clientUsername = api.getUsername();
+        clientPass = api.getAuthPass();
+        channel = api.getChannel();
+        version = api.getVersion();
 
         // Register commands
         new Command(Prefix.QUESTION_MARK, channel, "wassa", Arrays.asList("wasser?", "seife!"));

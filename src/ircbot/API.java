@@ -1,8 +1,7 @@
 package ircbot;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 public class API {
@@ -12,7 +11,7 @@ public class API {
      * @return IRC username
      * @throws IOException
      */
-    public static String getUsername() throws IOException {
+    public String getUsername() throws IOException {
         return readProperty("credentials.properties", "username");
     }
 
@@ -21,7 +20,7 @@ public class API {
      * @return NickServ password
      * @throws IOException
      */
-    public static String getAuthPass() throws IOException {
+    public String getAuthPass() throws IOException {
         return readProperty("credentials.properties", "pass");
     }
 
@@ -30,7 +29,7 @@ public class API {
      * @return channel name
      * @throws IOException
      */
-    public static String getChannel() throws IOException {
+    public String getChannel() throws IOException {
         return readProperty("credentials.properties", "channel");
     }
 
@@ -39,7 +38,7 @@ public class API {
      * @return version string
      * @throws IOException
      */
-    public static String getVersion() throws IOException {
+    public String getVersion() throws IOException {
         return readProperty("credentials.properties", "version");
     }
 
@@ -50,12 +49,12 @@ public class API {
      * @return              property key, default null
      * @throws IOException
      */
-    private static String readProperty(String fileName, String property) throws IOException {
-        File file = new File(fileName);
-        FileInputStream fileInput = new FileInputStream(file);
-        Properties propertis = new Properties();
-        propertis.load(fileInput);
+    private String readProperty(String fileName, String property) throws IOException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        InputStream fileInput = classLoader.getResourceAsStream(fileName);
+        Properties properties = new Properties();
+        properties.load(fileInput);
         fileInput.close();
-        return propertis.getProperty(property, null);
+        return properties.getProperty(property, null);
     }
 }
