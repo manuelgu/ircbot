@@ -10,7 +10,7 @@ Usage examples would be having shortcuts for important links that people recentl
 ## Building
 
 1. Clone the repository
-2. Create `credentials.properties` and fill out like the following:
+2. Rename `example.credentials.properties` to `credentials.properties` and fill out like the following:
 
   ```
   username=IRCUsername

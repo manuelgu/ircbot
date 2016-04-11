@@ -26,14 +26,13 @@ public class IRCBot {
 
     public static void main(String[] args) throws Exception {
         // Read username, pass and channel from credentials file
-        API api = new API();
-        clientUsername = api.getUsername();
-        clientPass = api.getAuthPass();
-        channel = api.getChannel();
-        version = api.getVersion();
+        FileUtils futil = new FileUtils();
+        clientUsername = futil.getUsername();
+        clientPass = futil.getAuthPass();
+        channel = futil.getChannel();
+        version = futil.getVersion();
 
         // Register commands
-        new Command(Prefix.QUESTION_MARK, channel, "wassa", Arrays.asList("wasser?", "seife!"));
         new Command(Prefix.QUESTION_MARK, channel, "webchat", "http://webchat.esper.net/?nick=&channels=manuelgu");
         new Command(Prefix.QUESTION_MARK, channel, "ping", Arrays.asList("Ping?", "Pong!"));
 

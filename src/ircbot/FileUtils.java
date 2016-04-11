@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class API {
+public class FileUtils {
 
     /**
      * Get the username of the client specified in the <i>credentials.properties<i>
