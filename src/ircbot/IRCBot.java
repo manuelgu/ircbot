@@ -2,6 +2,7 @@ package ircbot;
 
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
+import org.pircbotx.UtilSSLSocketFactory;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ public class IRCBot {
     public static String version;
 
     public static void main(String[] args) throws Exception {
-        // Read username, pass and channel from credentials file
+        // Read credentials from properties file
         FileUtils futil = new FileUtils();
         clientUsername = futil.getUsername();
         clientPass = futil.getAuthPass();
@@ -37,16 +38,26 @@ public class IRCBot {
         new Command(Prefix.QUESTION_MARK, channel, "ping", Arrays.asList("Ping?", "Pong!"));
 
         Configuration configuration = new Configuration.Builder()
+                // Set name and details
                 .setName(clientUsername)
-                .addServer("irc.esper.net")
-                .addAutoJoinChannel(channel)
-                .addListener(new ChatListener())
                 .setVersion(version)
                 .setRealName(version)
+                .setLogin(clientUsername)
+                // Use SSL
+                .addServer("irc.esper.net", 6697)
+                .setSocketFactory(new UtilSSLSocketFactory().trustAllCertificates())
+                // Authenticate with NickServ
+                .setNickservNick(clientUsername)
+                .setNickservPassword(clientPass)
+                // Join channel
+                .addAutoJoinChannel(channel)
+                // Add listener
+                .addListener(new ChatListener())
+                // Auto reconnect
                 .setAutoReconnect(true)
                 .setAutoReconnectAttempts(10)
-                .setAutoReconnectDelay(20)
-                .setLogin(clientUsername)
+                .setAutoReconnectDelay(20 * 1000)
+
                 .buildConfiguration();
 
         PircBotX bot = new PircBotX(configuration);
