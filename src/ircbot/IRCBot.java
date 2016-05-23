@@ -12,6 +12,8 @@ import lombok.Getter;
 
 public class IRCBot {
     public static Set<Command> commandList = new HashSet<>();
+    public static Set<String> ops = new HashSet<>();
+    public static Set<String> autoJoinChannels = new HashSet<>();
 
     @Getter
     public static String channel;
@@ -37,6 +39,12 @@ public class IRCBot {
         new Command(Prefix.QUESTION_MARK, channel, "webchat", "http://webchat.esper.net/?nick=&channels=manuelgu");
         new Command(Prefix.QUESTION_MARK, channel, "ping", Arrays.asList("Ping?", "Pong!"));
 
+        // Add OPs that have full access to the bot
+        ops.add("manuelgu");
+
+        // Add auto join channels (w/out #)
+        autoJoinChannels.add("manuelgu");
+
         Configuration configuration = new Configuration.Builder()
                 // Set name and details
                 .setName(clientUsername)
@@ -49,8 +57,6 @@ public class IRCBot {
                 // Authenticate with NickServ
                 .setNickservNick(clientUsername)
                 .setNickservPassword(clientPass)
-                // Join channel
-                .addAutoJoinChannel(channel)
                 // Add listener
                 .addListener(new ChatListener())
                 // Auto reconnect

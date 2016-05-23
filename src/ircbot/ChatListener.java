@@ -1,14 +1,35 @@
 package ircbot;
 
+import org.pircbotx.User;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.ConnectEvent;
+import org.pircbotx.hooks.events.JoinEvent;
 import org.pircbotx.hooks.events.MessageEvent;
 import org.pircbotx.hooks.events.PrivateMessageEvent;
 import org.pircbotx.hooks.events.VoiceEvent;
-
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class ChatListener extends ListenerAdapter {
+    Logger privLog;
+    FileHandler fh;
+
+    public ChatListener() {
+        try {
+            privLog = Logger.getLogger("PrivateMSG");
+            fh = new FileHandler("privatemessages.log");
+            privLog.addHandler(fh);
+
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onMessage(MessageEvent event) throws Exception {
@@ -35,7 +56,45 @@ public class ChatListener extends ListenerAdapter {
         if (event.getUser() == null) {
             return;
         }
-        event.respondPrivateMessage("Please message 'manuelgu', I'm just a bot.");
+        User user = event.getUser();
+        if (IRCBot.ops.contains(user.getNick())) {
+            String message = event.getMessage();
+            if (message.startsWith("!join")) {
+                String channel = message.substring(6);
+                event.getBot().sendIRC().joinChannel(channel);
+            }
+            if (message.startsWith("!part")) {
+                String channel = message.substring(6);
+                event.getBot().sendRaw().rawLine("PART " + channel);
+            }
+            if (message.startsWith("!quit")) {
+                event.getBot().sendIRC().quitServer();
+            }
+
+        } else {
+            event.respondPrivateMessage("Please message 'manuelgu', I'm just a bot.");
+            privLog.info("[" + event.getUser().getNick() + "] " + event.getMessage());
+        }
+    }
+
+    @Override
+    public void onJoin(JoinEvent event) throws Exception {
+        if (event.getUser() == null) {
+            return;
+        }
+        if (!event.getUser().getNick().equalsIgnoreCase(event.getBot().getNick())) {
+            event.respond("Hi! Please be patient, it might be that nobody is around at the moment.");
+        }
+    }
+
+    @Override
+    public void onConnect(ConnectEvent event) throws Exception {
+        for (String channel : IRCBot.autoJoinChannels) {
+            if (channel == null) {
+                return;
+            }
+            event.getBot().sendIRC().joinChannel("#" + channel);
+        }
     }
 
     /**
